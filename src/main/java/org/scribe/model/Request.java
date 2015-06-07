@@ -1,12 +1,21 @@
 package org.scribe.model;
 
-import java.io.*;
-import java.net.*;
-import java.nio.charset.*;
-import java.util.*;
-import java.util.concurrent.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import org.scribe.exceptions.*;
+import org.scribe.exceptions.OAuthConnectionException;
+import org.scribe.exceptions.OAuthException;
+
+import co.paralleluniverse.fibers.okhttp.FiberOkHttpClient;
+
+import com.squareup.okhttp.OkUrlFactory;
 
 /**
  * Represents an HTTP Request object
@@ -18,7 +27,7 @@ public class Request
   private static final String CONTENT_LENGTH = "Content-Length";
   private static final String CONTENT_TYPE = "Content-Type";
   private static RequestTuner NOOP = new RequestTuner() {
-    @Override public void tune(Request _){}
+    @Override public void tune(Request request){}
   };
   public static final String DEFAULT_CONTENT_TYPE = "application/x-www-form-urlencoded";
 
@@ -29,6 +38,7 @@ public class Request
   private Map<String, String> headers;
   private String payload = null;
   private HttpURLConnection connection;
+  private final OkUrlFactory factory;
   private String charset;
   private byte[] bytePayload = null;
   private boolean connectionKeepAlive = false;
@@ -49,6 +59,7 @@ public class Request
     this.querystringParams = new ParameterList();
     this.bodyParams = new ParameterList();
     this.headers = new HashMap<String, String>();
+    this.factory = new OkUrlFactory(new FiberOkHttpClient());
   }
 
   /**
@@ -82,7 +93,7 @@ public class Request
     if (connection == null)
     {
       System.setProperty("http.keepAlive", connectionKeepAlive ? "true" : "false");
-      connection = (HttpURLConnection) new URL(completeUrl).openConnection();
+      connection = (HttpURLConnection) this.factory.open(new URL(completeUrl));
       connection.setInstanceFollowRedirects(followRedirects);
     }
   }
