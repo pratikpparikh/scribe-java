@@ -37,6 +37,33 @@ public class Response
       throw new OAuthException("The IP address of a host could not be determined.", e);
     }
   }
+  
+  Response(com.squareup.okhttp.Response okhttpresponse) throws IOException
+  {
+    try
+    {
+      code = okhttpresponse.code();
+      message = okhttpresponse.message();
+      headers = new TreeMap<String, String>();
+      okhttpresponse.headers().toMultimap().forEach((key,value) -> {
+    	  if(key != null && value != null){
+    		  final StringBuilder valueBuilder = new StringBuilder();
+    		  value.forEach(valuePart -> {
+    			  if(valueBuilder.length() > 0){
+    				  valueBuilder.append(",");
+    			  }
+    			  valueBuilder.append(valuePart);
+    		  });
+    		  headers.put(key,valueBuilder.toString());
+    	  }
+      });
+      body = okhttpresponse.body().string();
+    }
+    catch (UnknownHostException e)
+    {
+      throw new OAuthException("The IP address of a host could not be determined.", e);
+    }
+  }
 
   private String parseBodyContents()
   {
