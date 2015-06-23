@@ -145,9 +145,6 @@ public class Request {
 			client.setWriteTimeout(writeTimeout.intValue(),
 					TimeUnit.MILLISECONDS);
 		}
-		if (verb.equals(Verb.PUT) || verb.equals(Verb.POST)) {
-			addBody(connection, getByteBodyContents());
-		}
 		tuner.tune(this);
 		return new Response(client.newCall(requestBuilder.build()).execute());
 	}
@@ -159,7 +156,7 @@ public class Request {
 	private void createConnection() throws IOException {
 		String completeUrl = getCompleteUrl();
 		if (async && requestBuilder == null) {
-			requestBuilder = new com.squareup.okhttp.Request.Builder().url(url);
+			requestBuilder = new com.squareup.okhttp.Request.Builder().url(completeUrl);
 		} else if (connection == null && !async) {
 			System.setProperty("http.keepAlive", connectionKeepAlive ? "true"
 					: "false");
