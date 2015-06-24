@@ -20,12 +20,25 @@ public class OAuthRequest extends Request
    *
    * @param verb Http verb/method
    * @param url resource URL
+   * @param async async will allow futures exection.
+   */
+  public OAuthRequest(Verb verb, String url, Boolean async)
+  {
+    super(verb, url,async);
+    this.oauthParameters = new HashMap<String, String>();
+  }
+  
+  /**
+   * Default constructor.
+   *
+   * @param verb Http verb/method
+   * @param url resource URL
    */
   public OAuthRequest(Verb verb, String url)
   {
-    super(verb, url);
-    this.oauthParameters = new HashMap<String, String>();
+    this(verb, url,Boolean.FALSE);
   }
+  
 
   /**
    * Adds an OAuth parameter.
