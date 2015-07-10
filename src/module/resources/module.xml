@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright 2014 Red Hat, Inc. and/or its affiliates.
+  ~
+  ~ Licensed under the Eclipse Public License version 1.0, available at http://www.eclipse.org/legal/epl-v10.html
+  -->
+<module xmlns="urn:jboss:module:1.3" name="org.scribe">
+
+    <resources>
+        <resource-root path="scribe-1.3.7.jar"/>
+    </resources>
+
+    <dependencies>
+        <system export="true">
+            <paths>
+                <path name="javax/accessibility"/>
+                <path name="javax/annotation/processing"/>
+                <path name="javax/activity"/>
+                <path name="javax/crypto"/>
+                <path name="javax/crypto/interfaces"/>
+                <path name="javax/crypto/spec"/>
+             </paths>
+        </system>
+        <module name="commons-codec.commons-codec"/>
+        <module name="co.paralleluniverse.quasar-core"/>
+        <module name="co.paralleluniverse.comsat-okhttp"/>
+        <module name="com.squareup.okhttp.core"/>
+        <module name="com.squareup.okhttp.urlconnection"/>
+        <module name="com.squareup.okio"/>
+        <module name="org.apache.commons.lang3"/>
+        <module name="jsr166e"/>
+    </dependencies>
+</module>
