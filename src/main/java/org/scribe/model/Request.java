@@ -128,16 +128,11 @@ public class Request {
 		} else if (verb.equals(Verb.PATCH)) {
 			requestBuilder = requestBuilder.patch(body);
 		}
-		for(final Map.Entry<String, String> headerEntry : headers.entrySet()){
-		  if(headerEntry == null || headerEntry.getKey() == null || headerEntry.getValue() == null){
-		    continue;
-		  }
-		  final String key = headerEntry.getKey();
-		  final String value = headerEntry.getValue();
-		  if (key != null && value != null) {
-            requestBuilder.addHeader(key, value);
-          }
-		}
+		this.headers.forEach((key, value) -> {
+			if (key != null && value != null) {
+				requestBuilder.addHeader(key, value);
+			}
+		});
 		final OkHttpClient client = this.factory.client();
 		if (connectTimeout != null) {
 			client.setConnectTimeout(connectTimeout.intValue(),
