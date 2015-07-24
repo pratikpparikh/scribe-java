@@ -23,7 +23,7 @@
         <module name="commons-codec.commons-codec"/>
         <module name="co.paralleluniverse.quasar-core"/>
         <module name="co.paralleluniverse.comsat-okhttp"/>
-        <module name="com.squareup.okhttp.core"/>
+        <module name="com.squareup.okhttp"/>
         <module name="com.squareup.okhttp.urlconnection"/>
         <module name="com.squareup.okio"/>
         <module name="org.apache.commons.lang3"/>

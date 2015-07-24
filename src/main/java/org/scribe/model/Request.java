@@ -62,8 +62,8 @@ public class Request {
 	 * @param async
 	 *            async will allow futures exection.
 	 */
-	public Request(Verb verb, String url, final Boolean async) {
-		this.verb = verb;
+	public Request(Verb httpverb, String url, final Boolean async) {
+		this.verb = httpverb;
 		this.url = url;
 		this.querystringParams = new ParameterList();
 		this.bodyParams = new ParameterList();
@@ -80,8 +80,8 @@ public class Request {
 	 * @param url
 	 *            url with optional querystring parameters.
 	 */
-	public Request(Verb verb, String url) {
-		this(verb, url, Boolean.FALSE);
+	public Request(Verb httpverb, String url) {
+		this(httpverb, url, Boolean.FALSE);
 	}
 
 	/**
